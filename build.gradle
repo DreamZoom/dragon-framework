@@ -1,0 +1,43 @@
+subprojects {
+
+    group 'cn.dragon'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    //jdk版本
+    group = 'cn.dragon'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
+
+    repositories {
+        //优先从本地仓库获取
+        mavenLocal()
+        //从阿里云或者公司仓库获取
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        maven { url 'https://repo.spring.io/milestone/' }
+        //从中央仓库获取
+        mavenCentral()
+    }
+
+
+    ext {
+        springBootVersion = '2.3.10.RELEASE'
+        springCloudVersion = 'Hoxton.SR10'
+        springManagementVersion = '1.0.11.RELEASE'
+        springCloudAlibabaVersion = "2.2.5.RELEASE"
+        mybatisPlusVersion = '3.4.0'
+        freemarkerVersion = '2.3.31'
+        junitVersion = '4.12'
+    }
+
+
+    task createDirs(){
+        sourceSets*.java.srcDirs*.each{it.mkdirs()}
+        sourceSets*.resources.srcDirs*.each{it.mkdirs()}
+    }
+
+}
+
