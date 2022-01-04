@@ -30,7 +30,6 @@ public class EndpointController {
     public Object invoke(String service, String method, HttpServletRequest request) throws Exception {
         Handler handler =getHandler(service,method);
         HandlerContext context =new ServiceHandlerContext(request);
-        HandlerAdapter handlerAdapter = new HttpRequestHandlerAdapter();
         return handler.handle(context);
     }
 
