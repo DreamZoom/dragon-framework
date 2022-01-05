@@ -17,7 +17,7 @@ public class ServiceHandlerContext implements HandlerContext {
     private HttpServletRequest request;
     @Override
     public Object getParameter(String name,Class type) {
-        
+
 
         return request.getParameter(name);
     }
