@@ -1,2 +1,10 @@
 server:
   port: 8087
+spring:
+  application:
+    name: container
+  datasource:
+    url: jdbc:mysql://192.168.1.167:3308/db_container
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver

@@ -22,4 +22,12 @@ public class UserVO implements Serializable {
     }
 
     private Integer age;
+
+    @Override
+    public String toString() {
+        return "UserVO{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

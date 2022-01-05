@@ -11,12 +11,8 @@ jar {
 dependencies {
     compile project(':framework')
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-//    0
-
-//    implementation("com.google.zxing:core:3.3.3")
-//    implementation("com.google.zxing:javase:3.3.3")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 }
