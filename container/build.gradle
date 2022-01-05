@@ -7,13 +7,10 @@ plugins {
 dependencies {
     compile project(':framework')
     compile project(':passport')
+    implementation 'mysql:mysql-connector-java'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
-//    0
-
-//    implementation("com.google.zxing:core:3.3.3")
-//    implementation("com.google.zxing:javase:3.3.3")
+    implementation("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 }

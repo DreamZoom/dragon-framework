@@ -1,14 +1,18 @@
 plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springManagementVersion}"
     id 'java'
 }
+
 jar {
     enabled = true
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation("com.google.guava:guava:29.0-jre")
+    implementation("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
 }

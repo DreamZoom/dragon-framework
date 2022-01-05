@@ -43,7 +43,7 @@ public class ServiceHandler implements Handler {
     Object[] resolveArguments(HandlerContext context,Parameter[] parameters){
         Object[] args = new Object[parameters.length];
         for (int i = 0; i <parameters.length ; i++) {
-            args[i]=context.getParameter(parameters[i].getName(),parameters[i].getType());
+            args[i]=context.getParameter(new ServiceHandlerParameter(parameters[i]));
         }
         return args;
     }
