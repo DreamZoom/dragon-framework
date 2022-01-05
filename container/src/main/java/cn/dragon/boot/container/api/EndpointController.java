@@ -13,7 +13,9 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerAdapter;
@@ -43,7 +45,7 @@ public class EndpointController {
      * @return 服务调用结果
      * @throws Exception 可能的异常
      */
-    @RequestMapping("/api")
+    @PostMapping("/api")
     public Object invoke(String service, String method, HttpServletRequest request) throws Exception {
         Handler handler =getHandler(service,method);
         HandlerContext context =new ServiceHandlerContext(request);
@@ -56,6 +58,7 @@ public class EndpointController {
         IDragonService dragonService = (IDragonService) context.getBean(service);
         if(dragonService != null){
             //检测服务是否具有ApiService注解
+            ClassUtils.getUserClass(dragonService);
             Class serviceClass = AopUtils.getTargetClass(dragonService);
             ApiService apiService = AnnotationUtils.findAnnotation(serviceClass,ApiService.class);
             if(apiService == null) return null;

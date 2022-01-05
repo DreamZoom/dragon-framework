@@ -86,22 +86,6 @@ public class BaseService<T extends BaseEntity,ID extends Serializable> implement
         return  repository.selectById(id);
     }
 
-    public List<T> find(Iterable<ID> ids){
-        List<ID> id_list = new ArrayList<>();
-        for (ID m:ids) {
-            id_list.add((ID) m);
-        }
-        return  repository.selectBatchIds(id_list);
-    }
-
-    public List<T> find(ID ...ids){
-        List<ID> id_list = new ArrayList<>();
-        for (ID m:ids) {
-            id_list.add((ID) m);
-        }
-        return  repository.selectBatchIds(id_list);
-    }
-
     public List<T> findByKeys(String key,Object ...values){
         QueryWrapper<T> queryWrapper = Wrappers.query();
         queryWrapper.in(key,values);
