@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages = {"cn.dragon.cloud.passport","cn.dragon.boot.container"},nameGenerator = ClassNameBeanNameGenerator.class)
-@MapperScan("cn.dragon.cloud.passport.repository")
 @SpringBootApplication
 public class ContainerApplication {
     public static void main(String[] args) {

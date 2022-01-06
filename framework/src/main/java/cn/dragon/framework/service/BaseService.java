@@ -1,6 +1,7 @@
 package cn.dragon.framework.service;
 
 
+import cn.dragon.framework.Api;
 import cn.dragon.framework.IDragonService;
 import cn.dragon.framework.domain.BaseEntity;
 import cn.dragon.framework.exception.ServiceException;

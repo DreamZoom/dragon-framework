@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
-@ApiService
+@ApiService(name = "用户服务")
 public class UserService implements IDragonService {
     public String hello(String name,Integer age,UserVO user){
         return String.format("hello,%s,%d,%s",name,age,user.toString());

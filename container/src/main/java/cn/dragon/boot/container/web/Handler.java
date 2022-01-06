@@ -9,6 +9,6 @@ public interface Handler {
 
     Object getBean();
 
-    Object handle(HandlerContext context) throws Exception;
+    Object handle(HandlerContext context) throws Throwable;
 
 }

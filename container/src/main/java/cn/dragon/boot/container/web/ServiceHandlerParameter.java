@@ -1,30 +1,23 @@
 package cn.dragon.boot.container.web;
 
+import org.springframework.core.MethodParameter;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
-public class ServiceHandlerParameter implements HandlerParameter {
+public class ServiceHandlerParameter extends MethodParameter implements HandlerParameter {
 
-    public ServiceHandlerParameter(Parameter parameter) {
-        this.parameter = parameter;
-    }
 
-    private Parameter parameter;
+    public ServiceHandlerParameter(MethodParameter original) {
+        super(original);
 
-    @Override
-    public Class getParameterType() {
-        return parameter.getType();
+
     }
 
     @Override
     public String getParameterName() {
-        return parameter.getName();
-    }
-
-    @Override
-    public <T extends Annotation> T getParameterAnnotation(Class<T> annotationClass) {
-        return parameter.getAnnotation(annotationClass);
+        return this.getParameter().getName();
     }
 }

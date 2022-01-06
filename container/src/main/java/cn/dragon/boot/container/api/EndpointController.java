@@ -1,10 +1,7 @@
 package cn.dragon.boot.container.api;
 
 import cn.dragon.boot.container.utils.SpringUtils;
-import cn.dragon.boot.container.web.Handler;
-import cn.dragon.boot.container.web.HandlerContext;
-import cn.dragon.boot.container.web.ServiceHandler;
-import cn.dragon.boot.container.web.ServiceHandlerContext;
+import cn.dragon.boot.container.web.*;
 import cn.dragon.framework.Api;
 import cn.dragon.framework.ApiService;
 import cn.dragon.framework.IDragonService;
@@ -15,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +33,7 @@ public class EndpointController {
 
 
     @Resource
-    SpringUtils springUtils;
+    HandlerRegistry handlerRegistry;
 
     /**
      * /api 接口
@@ -46,32 +44,16 @@ public class EndpointController {
      * @throws Exception 可能的异常
      */
     @PostMapping("/api")
-    public Object invoke(String service, String method, HttpServletRequest request) throws Exception {
-        Handler handler =getHandler(service,method);
+    public Object invoke(HttpServletRequest request) throws Throwable {
+        Handler handler =handlerRegistry.getHandler(request);
         HandlerContext context =new ServiceHandlerContext(request);
         return handler.handle(context);
     }
 
-
-    Handler getHandler(String service,String method){
-        ApplicationContext context = springUtils.getApplicationContext();
-        IDragonService dragonService = (IDragonService) context.getBean(service);
-        if(dragonService != null){
-            //检测服务是否具有ApiService注解
-            ClassUtils.getUserClass(dragonService);
-            Class serviceClass = AopUtils.getTargetClass(dragonService);
-            ApiService apiService = AnnotationUtils.findAnnotation(serviceClass,ApiService.class);
-            if(apiService == null) return null;
-
-            Method[] methods = serviceClass.getDeclaredMethods();
-            for (Method myMethod: methods) {
-                Api api = AnnotationUtils.findAnnotation(myMethod,Api.class);
-                if (myMethod.getName().equals(method) && api!=null) {
-                    return new ServiceHandler(dragonService,myMethod);
-                }
-            }
-        }
-        return null;
+    @GetMapping("/services")
+    public Object services() {
+        Object services =handlerRegistry.getData();
+        return services;
     }
 
 }
