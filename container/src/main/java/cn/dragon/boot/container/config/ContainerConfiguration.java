@@ -1,4 +1,4 @@
-package cn.dragon.boot.container;
+package cn.dragon.boot.container.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;

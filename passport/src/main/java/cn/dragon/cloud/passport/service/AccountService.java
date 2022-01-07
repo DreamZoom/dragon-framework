@@ -4,14 +4,18 @@ import cn.dragon.cloud.passport.domain.Account;
 import cn.dragon.framework.Api;
 import cn.dragon.framework.ApiService;
 import cn.dragon.framework.exception.ApiException;
+import cn.dragon.framework.security.PasswordEncoder;
 import cn.dragon.framework.service.BaseService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
+
 @ApiService(name = "账户服务")
 public class AccountService extends BaseService<Account,String> {
 
-
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Api(name = "账户更新")
     @Override
@@ -54,7 +58,7 @@ public class AccountService extends BaseService<Account,String> {
 
         Account account =new Account();
         account.setUsername(username);
-        account.setPassword(password);
+        account.setPassword(passwordEncoder.encode(password));
         account.setStatus(1);//通过审核
         return this.save(account);
     }

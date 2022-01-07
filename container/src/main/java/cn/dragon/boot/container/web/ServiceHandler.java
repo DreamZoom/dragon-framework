@@ -1,5 +1,6 @@
 package cn.dragon.boot.container.web;
 
+import cn.dragon.boot.container.web.models.ParameterModel;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.method.HandlerMethod;
@@ -8,6 +9,10 @@ import org.springframework.web.server.ServerWebExchange;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ServiceHandler extends HandlerMethod implements Handler {
 
@@ -30,6 +35,17 @@ public class ServiceHandler extends HandlerMethod implements Handler {
         }
     }
 
+    @Override
+    public ParameterModel[] getApiParameters() {
+        MethodParameter[] parameters = getMethodParameters();
+        List<ParameterModel> params = new ArrayList<>();
+        for (MethodParameter p: parameters) {
+            p = p.nestedIfOptional();
+            ServiceHandlerParameter parameter = new ServiceHandlerParameter(p);
+            params.add(new ParameterModel(parameter.getParameterName(),parameter.getParameterType()));
+        }
+        return params.toArray(new ParameterModel[params.size()]);
+    }
 
 
     Object[] resolveArguments(HandlerContext context,MethodParameter[] parameters){

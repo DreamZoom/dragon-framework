@@ -2,6 +2,7 @@ package cn.dragon.boot.container.web.models;
 
 import cn.dragon.boot.container.web.Handler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.core.MethodParameter;
 
 import java.io.Serializable;
 
@@ -30,6 +31,9 @@ public class ApiModel implements Serializable {
     }
     public String getId() {
         return id;
+    }
+    public ParameterModel[] getApiParameters(){
+        return this.handler.getApiParameters();
     }
 
 }

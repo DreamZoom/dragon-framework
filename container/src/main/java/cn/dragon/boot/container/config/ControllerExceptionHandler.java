@@ -1,7 +1,6 @@
-package cn.dragon.boot.container;
+package cn.dragon.boot.container.config;
 
 import cn.dragon.framework.exception.ApiException;
-import cn.dragon.framework.exception.InnerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
