@@ -1,6 +1,7 @@
 package cn.dragon.cloud.passport.service;
 
 import cn.dragon.cloud.passport.domain.Account;
+import cn.dragon.cloud.passport.repository.AccountRepository;
 import cn.dragon.framework.Api;
 import cn.dragon.framework.ApiService;
 import cn.dragon.framework.exception.ApiException;
@@ -14,8 +15,9 @@ import javax.annotation.Resource;
 @ApiService(name = "账户服务")
 public class AccountService extends BaseService<Account,String> {
 
+
     @Resource
-    private PasswordEncoder passwordEncoder;
+    private AccountRepository accountRepository;
 
     @Api(name = "账户更新")
     @Override
@@ -41,25 +43,16 @@ public class AccountService extends BaseService<Account,String> {
         return super.queryAll(model, page);
     }
 
-    @Api(name = "账户注册")
-    public Account register(String username,String password) throws Exception {
-        if(StringUtils.isEmpty(username)){
-            throw new ApiException("用户名不能为空");
-        }
 
-        if(StringUtils.isEmpty(password)){
-            throw new ApiException("密码不能为空");
-        }
 
-        Account exits = this.findByFieldValue("username",username);
-        if(exits!=null){
-            throw new ApiException("账户已存在");
-        }
+    ///////////////////////
 
-        Account account =new Account();
-        account.setUsername(username);
-        account.setPassword(passwordEncoder.encode(password));
-        account.setStatus(1);//通过审核
-        return this.save(account);
+    /***
+     * 查找用户 根据用户名
+     * @param username 用户名称
+     * @return 用户实体
+     */
+    public Account findByUsername(String username){
+        return accountRepository.findByUsername(username);
     }
 }
