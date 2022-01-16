@@ -15,6 +15,11 @@ public class BeanArgumentResolver implements HandlerArgumentResolver {
     @Override
     public Object resolveArgument(HandlerParameter parameter, HandlerContext context) throws Exception {
         ApplicationContext applicationContext = context.getApplicationContext();
-        return applicationContext.getBean(parameter.getParameterType());
+        try {
+            return applicationContext.getBean(parameter.getParameterType());
+        }
+        catch (Exception err){
+            return null;
+        }
     }
 }

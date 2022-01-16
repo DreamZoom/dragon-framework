@@ -31,6 +31,7 @@ public class ServiceHandlerContext implements HandlerContext {
         this.argumentResolvers.add(new DefaultArgumentResolver());
         this.argumentResolvers.add(new AttributeArgumentResolver());
         this.argumentResolvers.add(new BeanArgumentResolver());
+        this.argumentResolvers.add(new TypeArgumentResolver());
     }
 
 
