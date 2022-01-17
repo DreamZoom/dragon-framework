@@ -19,6 +19,16 @@ public class AccountService extends BaseService<Account,String> {
     @Resource
     private AccountRepository accountRepository;
 
+    @Resource
+    PasswordEncoder passwordEncoder;
+
+
+    @Api(name = "账户创建")
+    public Account create(Account model) throws Exception {
+        model.setPassword(passwordEncoder.encode(model.getPassword()));
+        return super.save(model);
+    }
+
     @Api(name = "账户更新")
     @Override
     public Account save(Account model) throws Exception {
@@ -40,7 +50,8 @@ public class AccountService extends BaseService<Account,String> {
     @Api(name = "账户分页查询")
     @Override
     public Page<Account> queryAll(Account model, Page page) {
-        return super.queryAll(model, page);
+        Page<Account> result =super.queryAll(model, page);
+        return result;
     }
 
 
