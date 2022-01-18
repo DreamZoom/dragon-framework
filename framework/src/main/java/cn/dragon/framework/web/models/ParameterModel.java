@@ -1,4 +1,4 @@
-package cn.dragon.boot.container.web.models;
+package cn.dragon.framework.web.models;
 
 import java.io.Serializable;
 

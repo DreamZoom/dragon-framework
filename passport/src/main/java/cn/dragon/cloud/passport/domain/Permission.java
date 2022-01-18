@@ -5,7 +5,7 @@ import cn.dragon.framework.domain.BaseEntity;
 /**
  * 功能模型
  */
-public class Feature extends BaseEntity {
+public class Permission extends BaseEntity {
     public String getName() {
         return name;
     }
@@ -22,6 +22,17 @@ public class Feature extends BaseEntity {
         this.apis = apis;
     }
 
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private String title;
     private String name;
+
     private String apis;
 }

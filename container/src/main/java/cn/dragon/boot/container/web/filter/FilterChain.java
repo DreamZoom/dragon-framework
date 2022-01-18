@@ -1,6 +1,7 @@
 package cn.dragon.boot.container.web.filter;
 
-import cn.dragon.boot.container.web.HandlerContext;
+
+import cn.dragon.framework.web.HandlerContext;
 
 public interface FilterChain {
 

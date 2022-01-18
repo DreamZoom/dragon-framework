@@ -1,11 +1,7 @@
 package cn.dragon.boot.container.web;
 
+import cn.dragon.framework.web.HandlerParameter;
 import org.springframework.core.MethodParameter;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.Type;
-import java.util.Objects;
 
 public class ServiceHandlerParameter extends MethodParameter implements HandlerParameter {
 

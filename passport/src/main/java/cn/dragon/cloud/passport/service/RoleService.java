@@ -9,15 +9,23 @@ import cn.dragon.framework.ApiService;
 import cn.dragon.framework.service.BaseService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 
 @ApiService(name = "角色服务")
 public class RoleService extends BaseService<Role,String> {
 
+    @Resource
+    PermissionService permissionService;
+
     @Api(name = "角色更新")
-    @Override
-    public Role save(Role model) throws Exception {
-        return super.save(model);
+    @Transactional
+    public Role save(Role model,String[] permissions) throws Exception {
+        Role role = super.save(model);
+        permissionService.updatePermissions(role.getId(),permissions);
+        return role;
     }
 
     @Api(name = "角色查询")

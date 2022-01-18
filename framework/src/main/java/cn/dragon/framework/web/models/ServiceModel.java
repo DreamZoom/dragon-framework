@@ -1,6 +1,4 @@
-package cn.dragon.boot.container.web.models;
-
-import cn.dragon.framework.Api;
+package cn.dragon.framework.web.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;

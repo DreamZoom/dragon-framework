@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dragon.cloud.passport.repository.PermissionRepository">
+    <insert id="insertRolePermission">
+        INSERT into role_permission (role_permission.role_id,role_permission.permission_id) VALUES (#{roleId},#{permissionId})
+    </insert>
+
+    <delete id="deletePermissionNotIn">
+        DELETE FROM role_permission WHERE role_id = #{roleId} AND permission_id NOT IN<foreach item="item" collection="permissions" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+
+    <select id="queryPermissions" resultType="cn.dragon.cloud.passport.domain.Permission">
+        SELECT permission.* FROM role_permission JOIN permission ON role_permission.permission_id = permission.id WHERE role_permission.role_id = #{roleId}
+    </select>
+
+    <select id="queryExistPermissions" resultType="java.lang.String">
+        SELECT role_permission.permission_id FROM role_permission WHERE role_id = #{roleId} AND permission_id NOT IN<foreach item="item" collection="permissions" open="(" separator="," close=")">#{item}</foreach>
+    </select>
+</mapper>
