@@ -22,17 +22,18 @@ public class AccountService extends BaseService<Account,String> {
     @Resource
     PasswordEncoder passwordEncoder;
 
-
-    @Api(name = "账户创建")
-    public Account create(Account model) throws Exception {
-        model.setPassword(passwordEncoder.encode(model.getPassword()));
-        return super.save(model);
-    }
+    @Resource
+    RoleService roleService;
 
     @Api(name = "账户更新")
-    @Override
-    public Account save(Account model) throws Exception {
-        return super.save(model);
+    public Account save(Account model,String[] roles) throws Exception {
+        //id为空表示新增，需要加密初始密码
+        if(StringUtils.isEmpty(model.getId())){
+            model.setPassword(passwordEncoder.encode(model.getPassword()));
+        }
+        Account account = super.save(model);
+        roleService.updateRoles(account.getId(),roles);
+        return account;
     }
 
     @Api(name = "账户查询")
@@ -52,6 +53,15 @@ public class AccountService extends BaseService<Account,String> {
     public Page<Account> queryAll(Account model, Page page) {
         Page<Account> result =super.queryAll(model, page);
         return result;
+    }
+
+    @Api(name = "账户重置密码")
+    public Account resetPassword(String id,String password) throws Exception {
+        //id为空表示新增，需要加密初始密码
+        Account account = new Account();
+        account.setId(id);
+        account.setPassword(passwordEncoder.encode(password));
+        return super.save(account);
     }
 
 

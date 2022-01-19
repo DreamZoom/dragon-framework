@@ -5,4 +5,9 @@ public class GuestToken implements Token {
     public String getToken() {
         return null;
     }
+
+    @Override
+    public UserDetails getDetails() {
+        return null;
+    }
 }

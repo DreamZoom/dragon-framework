@@ -59,7 +59,7 @@ public class UserService implements IDragonService {
 
     @Api(name = "用户信息")
     public UserDetails details(Token token) throws Exception {
-        return tokenService.loadUserDetails(token);
+        return token.getDetails();
     }
 
 }

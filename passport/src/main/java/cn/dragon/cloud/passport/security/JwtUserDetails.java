@@ -1,14 +1,13 @@
 package cn.dragon.cloud.passport.security;
 
 import cn.dragon.cloud.passport.domain.Account;
-import cn.dragon.framework.security.AuthenticationUserDetails;
+import cn.dragon.framework.security.UserDetails;
 
-public class JwtUserDetails extends AuthenticationUserDetails {
+public class JwtUserDetails implements UserDetails {
 
     private Account account;
 
     public JwtUserDetails(Account account) {
-        super(account.getUsername());
         this.account = account;
     }
 

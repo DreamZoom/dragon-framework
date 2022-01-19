@@ -6,6 +6,7 @@ import cn.dragon.framework.web.HandlerParameter;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,13 +16,15 @@ import java.util.Map;
 public class ServiceHandlerContext implements HandlerContext {
 
     private HttpServletRequest request;
+    private HttpServletResponse response;
     private List<HandlerArgumentResolver> argumentResolvers;
     private ApplicationContext applicationContext;
     private Map<Class<?>,Object> attributes;
     private Object returnValue;
 
-    public ServiceHandlerContext(HttpServletRequest request, ApplicationContext applicationContext) {
+    public ServiceHandlerContext(HttpServletRequest request,HttpServletResponse response, ApplicationContext applicationContext) {
         this.request = request;
+        this.response = response;
         this.applicationContext = applicationContext;
         this.attributes = new HashMap<>();
 
@@ -73,6 +76,11 @@ public class ServiceHandlerContext implements HandlerContext {
     @Override
     public HttpServletRequest getHttpServletRequest() {
         return request;
+    }
+
+    @Override
+    public HttpServletResponse getHttpServletResponse() {
+        return response;
     }
 
     @Override

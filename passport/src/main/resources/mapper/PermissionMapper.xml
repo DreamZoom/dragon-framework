@@ -5,8 +5,8 @@
         INSERT into role_permission (role_permission.role_id,role_permission.permission_id) VALUES (#{roleId},#{permissionId})
     </insert>
 
-    <delete id="deletePermissionNotIn">
-        DELETE FROM role_permission WHERE role_id = #{roleId} AND permission_id NOT IN<foreach item="item" collection="permissions" open="(" separator="," close=")">#{item}</foreach>
+    <delete id="deletePermissions">
+        DELETE FROM role_permission WHERE role_id = #{roleId}
     </delete>
 
     <select id="queryPermissions" resultType="cn.dragon.cloud.passport.domain.Permission">
@@ -14,6 +14,6 @@
     </select>
 
     <select id="queryExistPermissions" resultType="java.lang.String">
-        SELECT role_permission.permission_id FROM role_permission WHERE role_id = #{roleId} AND permission_id NOT IN<foreach item="item" collection="permissions" open="(" separator="," close=")">#{item}</foreach>
+        SELECT role_permission.permission_id FROM role_permission WHERE role_id = #{roleId} AND permission_id IN<foreach item="item" collection="permissions" open="(" separator="," close=")">#{item}</foreach>
     </select>
 </mapper>

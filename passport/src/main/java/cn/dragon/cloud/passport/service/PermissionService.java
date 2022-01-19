@@ -7,6 +7,7 @@ import cn.dragon.framework.ApiService;
 import cn.dragon.framework.service.BaseService;
 import cn.dragon.framework.web.HandlerRegistry;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -67,15 +68,10 @@ public class PermissionService extends BaseService<Permission,String> {
      * @param permissions
      * @return
      */
+    @Transactional
     public void updatePermissions(String roleId,String[] permissions) {
-        //删除不存在的数据
-        permissionRepository.deletePermissionNotIn(roleId,permissions);
-        //查询已存在的数据
-        List<String> exists = permissionRepository.queryExistPermissions(roleId,permissions);
+        permissionRepository.deletePermissions(roleId);
         List<String> permissionsList = CollectionUtils.arrayToList(permissions);
-        //排除已存在的id
-        permissionsList.removeAll(exists);
-
         for (int i = 0; i <permissionsList.size() ; i++) {
             permissionRepository.insertRolePermission(roleId,permissionsList.get(i));
         }

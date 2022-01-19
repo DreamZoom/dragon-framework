@@ -4,7 +4,6 @@ package cn.dragon.boot.container.web.filter;
 import cn.dragon.framework.web.Handler;
 import cn.dragon.framework.web.HandlerContext;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationFilterChain implements FilterChain {
@@ -14,10 +13,9 @@ public class ApplicationFilterChain implements FilterChain {
     private Handler handler;
     private int pos = 0;
 
-    public ApplicationFilterChain(Handler handler) {
+    public ApplicationFilterChain(Handler handler, List<Filter> filters) {
         this.handler = handler;
-        this.filters = new ArrayList<>();
-        this.addFilter(new TokenFilter());
+        this.filters = filters;
     }
 
     public void addFilter(Filter filter){

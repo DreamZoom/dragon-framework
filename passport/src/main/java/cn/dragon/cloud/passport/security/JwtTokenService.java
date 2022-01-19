@@ -39,27 +39,19 @@ public class JwtTokenService implements TokenService {
         return new JwtToken(jws, userDetails);
     }
 
-    public Token verify(Token token) throws Exception {
-        try {
-            UserDetails details = this.loadUserDetails(token);
-            return new JwtToken(token.getToken(),details);
-        }catch (Exception exception){
-            return null;
-        }
-    }
-
     @Override
-    public UserDetails loadUserDetails(Token token) throws Exception {
+    public Token loadToken(String token) throws Exception {
         String username = null;
         try {
-            Jws<Claims> jws =Jwts.parserBuilder().setSigningKey(keyService.getPublicKey()).build().parseClaimsJws(token.getToken());
+            Jws<Claims> jws =Jwts.parserBuilder().setSigningKey(keyService.getPublicKey()).build().parseClaimsJws(token);
             username = jws.getBody().getSubject();
         }catch (Exception exception){
             throw  new ApiException("token 验证失败");
         }
-        if(!StringUtils.isEmpty(username)){
-            return userDetailsService.loadUserByUsername(username);
+        if(StringUtils.isEmpty(username)){
+            throw  new ApiException("token 无效");
         }
-        return null;
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return new JwtToken(token, userDetails);
     }
 }

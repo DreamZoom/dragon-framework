@@ -11,5 +11,8 @@ import java.util.List;
 
 
 public interface RoleRepository extends BaseRepository<Role,String> {
-
+    List<Role> queryRoles(String accountId);
+    int deleteRoles(String accountId);
+    List<String> queryExistRoles(String accountId,String[] roles);
+    int insertAccountRole(String accountId,String roleId);
 }

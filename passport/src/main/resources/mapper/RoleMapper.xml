@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dragon.cloud.passport.repository.RoleRepository">
+    <insert id="insertAccountRole">
+        INSERT into account_role (account_role.account_id,account_role.role_id) VALUES (#{accountId},#{roleId})
+    </insert>
+    <delete id="deleteRoles">
+        DELETE FROM account_role WHERE account_role.account_id = #{accountId}
+    </delete>
+
+    <select id="queryRoles" resultType="cn.dragon.cloud.passport.domain.Role">
+        SELECT role.* FROM account_role JOIN role ON account_role.role_id = role.id WHERE account_role.account_id = #{accountId}
+    </select>
+    <select id="queryExistRoles" resultType="java.lang.String">
+        SELECT account_role.role_id FROM account_role WHERE account_role.account_id = #{accountId} AND account_role.role_id IN<foreach item="item" collection="roles" open="(" separator="," close=")">#{item}</foreach>
+    </select>
+</mapper>
