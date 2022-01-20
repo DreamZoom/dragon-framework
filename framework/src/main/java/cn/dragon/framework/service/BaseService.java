@@ -4,6 +4,7 @@ package cn.dragon.framework.service;
 import cn.dragon.framework.Api;
 import cn.dragon.framework.IDragonService;
 import cn.dragon.framework.domain.BaseEntity;
+import cn.dragon.framework.exception.ApiException;
 import cn.dragon.framework.exception.ServiceException;
 import cn.dragon.framework.query.QueryBuilder;
 import cn.dragon.framework.repository.BaseRepository;
@@ -65,11 +66,11 @@ public class BaseService<T extends BaseEntity,ID extends Serializable> implement
         return this.save(entity);
     }
 
-    public void delete(T entity){
+    public void delete(T entity) throws Exception {
         this.delete((ID) entity.getId());
     }
 
-    public void delete(ID id){
+    public void delete(ID id) throws ApiException, Exception {
         repository.deleteById((Serializable) id);
     }
     public void delete(ID[] ids){

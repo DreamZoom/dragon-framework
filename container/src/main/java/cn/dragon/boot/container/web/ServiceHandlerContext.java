@@ -1,6 +1,7 @@
 package cn.dragon.boot.container.web;
 
 import cn.dragon.boot.container.web.method.*;
+import cn.dragon.framework.web.Handler;
 import cn.dragon.framework.web.HandlerContext;
 import cn.dragon.framework.web.HandlerParameter;
 import org.springframework.context.ApplicationContext;
@@ -21,11 +22,13 @@ public class ServiceHandlerContext implements HandlerContext {
     private ApplicationContext applicationContext;
     private Map<Class<?>,Object> attributes;
     private Object returnValue;
+    private Handler handler;
 
-    public ServiceHandlerContext(HttpServletRequest request,HttpServletResponse response, ApplicationContext applicationContext) {
+    public ServiceHandlerContext(HttpServletRequest request, HttpServletResponse response, ApplicationContext applicationContext, Handler handler) {
         this.request = request;
         this.response = response;
         this.applicationContext = applicationContext;
+        this.handler = handler;
         this.attributes = new HashMap<>();
 
         this.returnValue = null;
@@ -40,7 +43,10 @@ public class ServiceHandlerContext implements HandlerContext {
     }
 
 
-
+    @Override
+    public Handler getHandler() {
+        return handler;
+    }
 
     @Override
     public Object getParameter(HandlerParameter parameter) {

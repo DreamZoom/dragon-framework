@@ -19,30 +19,37 @@ public class TypeArgumentResolver implements HandlerArgumentResolver {
 
     @Override
     public Object resolveArgument(HandlerParameter parameter, HandlerContext context) throws Exception {
-        Object instance = parameter.getParameterType().newInstance();
-        Field[] fields = parameter.getParameterType().getFields();
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
+        try{
+            Object instance = parameter.getParameterType().newInstance();
+            Field[] fields = parameter.getParameterType().getFields();
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
 
-            HandlerParameter handlerParameter =new HandlerParameter() {
-                @Override
-                public Class getParameterType() {
-                    return field.getType();
-                }
+                HandlerParameter handlerParameter =new HandlerParameter() {
+                    @Override
+                    public Class getParameterType() {
+                        return field.getType();
+                    }
 
-                @Override
-                public String getParameterName() {
-                    return field.getName();
-                }
+                    @Override
+                    public String getParameterName() {
+                        return field.getName();
+                    }
 
-                @Override
-                public <T extends Annotation> T getParameterAnnotation(Class<T> annotationClass) {
-                    return null;
-                }
-            };
-            Object fieldValue = defaultArgumentResolver.resolveArgument(handlerParameter,context);
-            ReflectionUtils.setField(field,instance,fieldValue);
+                    @Override
+                    public <T extends Annotation> T getParameterAnnotation(Class<T> annotationClass) {
+                        return null;
+                    }
+                };
+                Object fieldValue = defaultArgumentResolver.resolveArgument(handlerParameter,context);
+                ReflectionUtils.setField(field,instance,fieldValue);
+            }
+            return instance;
+
+        }catch (Exception exception){
+
         }
-        return instance;
+
+        return null;
     }
 }

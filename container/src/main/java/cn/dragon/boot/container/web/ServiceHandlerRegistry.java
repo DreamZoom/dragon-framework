@@ -83,7 +83,8 @@ public class ServiceHandlerRegistry implements HandlerRegistry, InitializingBean
         ServiceModel serviceModel = new ServiceModel(userType.getName(),apiService.name());
         methods.forEach((method,handlerMethod)->{
             Api api = AnnotationUtils.findAnnotation(method,Api.class);
-            serviceModel.addApi(new ApiModel(method.getName(),api.name(),new ServiceHandler(bean,method)));
+            String id =String.format("%s#%s", serviceModel.getId(),method.getName());
+            serviceModel.addApi(new ApiModel(method.getName(),api.name(),new ServiceHandler(id,bean,method)));
         });
         services.add(serviceModel);
     }

@@ -91,4 +91,14 @@ public class Account extends BaseEntity {
     private String source;
     @Where
     private Integer status;
+
+    public Integer getRoot() {
+        return root;
+    }
+
+    public void setRoot(Integer root) {
+        this.root = root;
+    }
+
+    private Integer root;
 }

@@ -13,4 +13,6 @@ public interface Handler {
 
     ParameterModel[] getApiParameters();
 
+    String getId();
+
 }

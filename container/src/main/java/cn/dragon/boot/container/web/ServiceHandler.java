@@ -19,9 +19,10 @@ import java.util.Map;
 
 public class ServiceHandler extends HandlerMethod implements Handler {
 
-
-    public ServiceHandler(Object bean, Method method) {
+    String id;
+    public ServiceHandler(String id,Object bean, Method method) {
         super(bean, method);
+        this.id = id;
     }
 
 
@@ -48,6 +49,11 @@ public class ServiceHandler extends HandlerMethod implements Handler {
             params.add(new ParameterModel(parameter.getParameterName(),parameter.getParameterType()));
         }
         return params.toArray(new ParameterModel[params.size()]);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
 

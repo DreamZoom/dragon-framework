@@ -8,6 +8,8 @@ import cn.dragon.framework.exception.ApiException;
 import cn.dragon.framework.security.PasswordEncoder;
 import cn.dragon.framework.service.BaseService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -25,13 +27,22 @@ public class AccountService extends BaseService<Account,String> {
     @Resource
     RoleService roleService;
 
+    @Value("${account.default-status:1}")
+    Integer defaultStatus;
+
     @Api(name = "账户更新")
+    @Transactional
     public Account save(Account model,String[] roles) throws Exception {
         //id为空表示新增，需要加密初始密码
         if(StringUtils.isEmpty(model.getId())){
+            model.setStatus(defaultStatus);
             model.setPassword(passwordEncoder.encode(model.getPassword()));
         }
+
         Account account = super.save(model);
+        if(account.getRoot()>0 && account.getStatus()<=0 ){
+            throw new ApiException("超级账户状态不能禁用");
+        }
         roleService.updateRoles(account.getId(),roles);
         return account;
     }
@@ -44,7 +55,10 @@ public class AccountService extends BaseService<Account,String> {
 
     @Api(name = "账户删除")
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws Exception {
+        Account account = this.find(id);
+        if(account==null) throw new ApiException("账户不存在");
+        if(account.getRoot()>0) throw new ApiException("超级账户不能删除");
         super.delete(id);
     }
 

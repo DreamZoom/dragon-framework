@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface HandlerContext {
+    Handler getHandler();
     Object getParameter(HandlerParameter parameter);
 
     void setAttribute(Class<?> type,Object value);

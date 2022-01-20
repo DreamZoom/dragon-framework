@@ -36,7 +36,7 @@ public class PermissionService extends BaseService<Permission,String> {
 
     @Api(name = "权限删除")
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws Exception {
         super.delete(id);
     }
 

@@ -7,4 +7,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface Api {
     String name();
+    boolean isPublic() default false;
 }

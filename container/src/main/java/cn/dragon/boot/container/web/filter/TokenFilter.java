@@ -1,9 +1,10 @@
 package cn.dragon.boot.container.web.filter;
 
-import cn.dragon.framework.security.GuestToken;
+import cn.dragon.framework.security.AnonymousToken;
 import cn.dragon.framework.security.Token;
 import cn.dragon.framework.security.TokenService;
 import cn.dragon.framework.web.HandlerContext;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
+@Order(10)
 public class TokenFilter implements Filter {
 
     private static String TokenKey = "Authorization";
@@ -24,7 +26,7 @@ public class TokenFilter implements Filter {
         HttpServletRequest request = context.getHttpServletRequest();
         String token = request.getHeader(TokenKey);
         if(StringUtils.isEmpty(token)) {
-            context.setAttribute(Token.class,new GuestToken());
+            context.setAttribute(Token.class,new AnonymousToken());
         }
         else{
             try {

@@ -43,7 +43,7 @@ public class RoleService extends BaseService<Role,String> {
 
     @Api(name = "角色删除")
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws Exception {
         super.delete(id);
     }
 

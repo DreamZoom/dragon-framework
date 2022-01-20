@@ -25,7 +25,7 @@ public class JwtTokenService implements TokenService {
         long nowMillis = System.currentTimeMillis();
         Date currentDate = new Date(nowMillis);
 
-        Date expiresDate = new Date(nowMillis+1000*60*30);//30分钟
+        Date expiresDate = new Date(nowMillis+1000*60*60*12);//12*60分钟
 
         ObjectMapper mapper =new ObjectMapper();
         Map<String,Object> claims = mapper.convertValue(userDetails, HashMap.class);
@@ -41,6 +41,10 @@ public class JwtTokenService implements TokenService {
 
     @Override
     public Token loadToken(String token) throws Exception {
+
+        if(StringUtils.isEmpty(token)){
+            throw  new ApiException("token 无效");
+        }
         String username = null;
         try {
             Jws<Claims> jws =Jwts.parserBuilder().setSigningKey(keyService.getPublicKey()).build().parseClaimsJws(token);
@@ -52,6 +56,9 @@ public class JwtTokenService implements TokenService {
             throw  new ApiException("token 无效");
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if(userDetails==null){
+            throw  new ApiException("授权账户不存在");
+        }
         return new JwtToken(token, userDetails);
     }
 }

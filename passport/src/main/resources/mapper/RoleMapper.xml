@@ -14,4 +14,7 @@
     <select id="queryExistRoles" resultType="java.lang.String">
         SELECT account_role.role_id FROM account_role WHERE account_role.account_id = #{accountId} AND account_role.role_id IN<foreach item="item" collection="roles" open="(" separator="," close=")">#{item}</foreach>
     </select>
+    <select id="queryRolesByUsername" resultType="cn.dragon.cloud.passport.domain.Role">
+        SELECT role.* FROM account_role JOIN role ON account_role.role_id = role.id JOIN `account` ON account_role.account_id = `account`.id WHERE `account`.username = #{username}
+    </select>
 </mapper>

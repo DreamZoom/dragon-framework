@@ -42,7 +42,7 @@ public class EndpointController {
     @PostMapping("/api")
     public Object invoke(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         Handler handler =handlerRegistry.getHandler(request);
-        HandlerContext context =new ServiceHandlerContext(request,response, springUtils.getApplicationContext());
+        HandlerContext context =new ServiceHandlerContext(request,response, springUtils.getApplicationContext(), handler);
         ApplicationFilterChain chain = new ApplicationFilterChain(handler, filters);
         chain.doFilter(context);
         return context.getReturnValue();

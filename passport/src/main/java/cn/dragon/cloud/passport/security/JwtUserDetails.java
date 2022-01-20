@@ -12,8 +12,18 @@ public class JwtUserDetails implements UserDetails {
     }
 
     @Override
+    public String getId() {
+        return account.getId();
+    }
+
+    @Override
     public String getUsername() {
         return account.getUsername();
+    }
+
+    @Override
+    public boolean isRoot() {
+        return account.getRoot()>0;
     }
 
     public String getPassword(){
