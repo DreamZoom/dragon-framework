@@ -5,6 +5,8 @@ import cn.dragon.framework.security.RoleDetails;
 import cn.dragon.framework.security.RoleLoader;
 import cn.dragon.framework.security.Token;
 import cn.dragon.framework.web.HandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import java.util.List;
 @Component
 @Order(20)
 public class SecurityAccessFilter implements Filter {
+
+    Logger logger = LoggerFactory.getLogger(SecurityAccessFilter.class);
 
     @Resource
     RoleLoader roleLoader;
@@ -50,6 +54,10 @@ public class SecurityAccessFilter implements Filter {
     }
 
     void sendError(HandlerContext context,int status,String message) throws IOException {
-        context.getHttpServletResponse().sendError(status,message);
+        if(!context.getHttpServletResponse().isCommitted()){
+            context.getHttpServletResponse().sendError(status,message);
+        }
+        logger.info(message);
+
     }
 }

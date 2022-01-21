@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolverComposite;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
-@ComponentScan(basePackages = {"cn.dragon.cloud.passport","cn.dragon.boot.container"})
+@ComponentScan(basePackages = {"cn.dragon.boot.container","cn.dragon.cloud.passport","cn.dragon.cloud.cms"})
 @SpringBootApplication
 @EnableTransactionManagement
 public class ContainerApplication {
