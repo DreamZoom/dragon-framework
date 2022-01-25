@@ -19,6 +19,15 @@ public class Article extends BaseEntity {
         this.content = content;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    private String categoryId;
     private String title;
     private String content;
 }
