@@ -12,4 +12,5 @@ public interface PermissionRepository extends BaseRepository<Permission,String> 
     int deletePermissions(String roleId);
     List<String> queryExistPermissions(String roleId,String[] permissions);
     int insertRolePermission(String roleId,String permissionId);
+    List<Permission> queryAccountPermissions(String accountId);
 }

@@ -77,4 +77,8 @@ public class PermissionService extends BaseService<Permission,String> {
         }
     }
 
+    public List<Permission> queryAccountPermissions(String accountId){
+        return permissionRepository.queryAccountPermissions(accountId);
+    }
+
 }

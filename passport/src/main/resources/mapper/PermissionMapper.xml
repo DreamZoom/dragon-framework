@@ -16,4 +16,7 @@
     <select id="queryExistPermissions" resultType="java.lang.String">
         SELECT role_permission.permission_id FROM role_permission WHERE role_id = #{roleId} AND permission_id IN<foreach item="item" collection="permissions" open="(" separator="," close=")">#{item}</foreach>
     </select>
+    <select id="queryAccountPermissions" resultType="cn.dragon.cloud.passport.domain.Permission">
+        SELECT permission.* FROM role_permission JOIN permission ON role_permission.permission_id = permission.id JOIN account_role ON role_permission.role_id = account_role.role_id WHERE account_role.account_id = #{accountId}
+    </select>
 </mapper>

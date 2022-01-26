@@ -1,6 +1,7 @@
 package cn.dragon.cloud.passport.service;
 
 import cn.dragon.cloud.passport.domain.Account;
+import cn.dragon.cloud.passport.domain.Permission;
 import cn.dragon.cloud.passport.security.JwtUserDetails;
 import cn.dragon.framework.Api;
 import cn.dragon.framework.ApiService;
@@ -12,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @ApiService(name = "用户服务")
@@ -25,6 +27,9 @@ public class UserService implements IDragonService {
 
     @Resource
     AccountService accountService;
+
+    @Resource
+    PermissionService permissionService;
 
     @Value("${account.default-status:1}")
     Integer defaultStatus;
@@ -61,7 +66,9 @@ public class UserService implements IDragonService {
         if(account.getStatus() <=0 ){
             throw new ApiException("账户未启用");
         }
-        UserDetails userDetails =new JwtUserDetails(account);
+
+        List<Permission> permissions = permissionService.queryAccountPermissions(account.getId());
+        UserDetails userDetails =new JwtUserDetails(account,permissions);
         return tokenService.generate(userDetails);
     }
 
@@ -88,7 +95,7 @@ public class UserService implements IDragonService {
 
         account.setPassword(passwordEncoder.encode(new_password));
         account = accountService.save(account);
-        return new JwtUserDetails(account);
+        return new JwtUserDetails(account,null);
     }
 
 }

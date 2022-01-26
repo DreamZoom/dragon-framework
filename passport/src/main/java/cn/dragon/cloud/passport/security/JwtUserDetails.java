@@ -1,14 +1,21 @@
 package cn.dragon.cloud.passport.security;
 
 import cn.dragon.cloud.passport.domain.Account;
+import cn.dragon.cloud.passport.domain.Permission;
 import cn.dragon.framework.security.UserDetails;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class JwtUserDetails implements UserDetails {
 
     private Account account;
 
-    public JwtUserDetails(Account account) {
+    List<Permission> permissions;
+
+    public JwtUserDetails(Account account,List<Permission> permissions) {
         this.account = account;
+        this.permissions = permissions;
     }
 
     @Override
@@ -24,6 +31,11 @@ public class JwtUserDetails implements UserDetails {
     @Override
     public boolean isRoot() {
         return account.getRoot()>0;
+    }
+
+    @Override
+    public List<String> getPermissions() {
+        return permissions.stream().map(m->m.getName()).collect(Collectors.toList());
     }
 
     public String getPassword(){
